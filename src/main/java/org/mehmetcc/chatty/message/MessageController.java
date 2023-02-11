@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -21,7 +22,11 @@ public class MessageController {
     }
 
     @PostMapping("/message")
-    Message receiveMessage(@RequestBody Message message) {
-        return repository.save(message);
+    Message receiveMessage(@RequestBody ReceivedMessage receivedMessage) {
+        return repository.save(Message.builder()
+                .content(receivedMessage.content())
+                .createdAt(receivedMessage.createdAt())
+                .receivedAt(LocalDateTime.now())
+                .build());
     }
 }

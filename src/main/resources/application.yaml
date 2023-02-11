@@ -1,0 +1,12 @@
+spring:
+  profiles:
+    active: usage_message
+  datasource:
+    driverClassName: org.postgresql.Driver
+    platform: postgres
+    url: jdbc:postgresql://localhost:32768/postgres
+    username: postgres
+    password: postgrespw
+  jpa:
+    hibernate:
+      ddl-auto: create-drop

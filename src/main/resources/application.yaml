@@ -9,3 +9,9 @@ spring:
     database: postgresql
     hibernate:
       ddl-auto: create-drop
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: messages-group
+kafka:
+  topicName: messages

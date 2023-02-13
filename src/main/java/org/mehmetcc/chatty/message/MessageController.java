@@ -24,13 +24,14 @@ public class MessageController {
     }
 
     @PostMapping("/message")
-    ResponseEntity<Message> receiveMessage(@RequestBody ReceivedMessage receivedMessage) {
+    ResponseEntity<?> receiveMessage(@RequestBody ReceivedMessage receivedMessage) {
         return service.persistMessage(Message.builder()
                         .content(receivedMessage.content())
                         .createdAt(receivedMessage.createdAt())
                         .receivedAt(LocalDateTime.now())
                         .build())
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.internalServerError().build());
+                .fold(
+                        exceptionMessage -> ResponseEntity.internalServerError().body(exceptionMessage),
+                        retrievedMessage -> ResponseEntity.ok(retrievedMessage));
     }
 }
